@@ -252,8 +252,43 @@ std::unique_ptr<ArmorVector> greedy_max_defense
 	double total_cost
 )
 {
+	std::unique_ptr<ArmorVector> todo(new ArmorVector(armors));
+	std::unique_ptr<ArmorVector> result(new ArmorVector);
+	double result_cost = 0;
+
+	while (todo->size() != 0)
+	{
+		int max_index = 0;	
+		std::shared_ptr<ArmorItem> max_element = todo->at(max_index);
+
+		// find max armor with greatest defense per cost
+		for (auto i = 1; i < todo->size(); i++)
+		{
+			std::shared_ptr<ArmorItem> current_element = todo->at(i);
+
+			if ((max_element->defense() / max_element->cost()) < 
+				(current_element->defense() / current_element->cost()))
+			{
+				max_element = current_element;
+				max_index = i;
+			}
+		}
+		
+		// remove max_element from todo
+		todo->erase(todo->begin() + max_index);
+
+		// get cost of max_element
+		double max_element_cost = max_element->cost();
+
+		// if armor is within total budget, add to result and result_cost
+		if (result_cost + max_element_cost <= total_cost)
+		{
+			result->push_back(max_element);
+			result_cost += max_element_cost;
+		}
+	}
+	return result;
 	// TODO: implement this function, then delete this comment
-	return nullptr;
 }
 
 
