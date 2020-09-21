@@ -226,8 +226,18 @@ std::unique_ptr<ArmorVector> filter_armor_vector
 	int total_size
 )
 {
-	// TODO: implement this function, then delete this comment
-	return nullptr;
+	std::unique_ptr<ArmorVector> filtered_subset(new ArmorVector);
+
+	for (auto& s : source)
+	{
+		if (s->defense() >= min_defense && s->defense() <= max_defense && 
+			filtered_subset->size() < total_size)
+		{
+			filtered_subset->push_back(s);
+		}
+	}
+
+	return filtered_subset;
 }
 
 
