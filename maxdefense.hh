@@ -288,7 +288,6 @@ std::unique_ptr<ArmorVector> greedy_max_defense
 		}
 	}
 	return result;
-	// TODO: implement this function, then delete this comment
 }
 
 
