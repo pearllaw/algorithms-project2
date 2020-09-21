@@ -1,8 +1,7 @@
 # Ignore compiled files
-*.exe
-*.out
-*.o
+*.dSYM
 maxdefense_test
+experiment
 
 # Ignore IDE files
 .vscode/
