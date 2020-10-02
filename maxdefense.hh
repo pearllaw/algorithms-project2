@@ -304,14 +304,14 @@ std::unique_ptr<ArmorVector> exhaustive_max_defense(
 	const int n = armors.size();
 	assert(n < 64);
 	
- std::unique_ptr<ArmorVector>best(new ArmorVector);
+ 	std::unique_ptr<ArmorVector> best(new ArmorVector);
     double best_total_cost = 0; 
     double best_total_defense = 0;
 
 
     for (uint64_t bits = 0; bits < pow(2, n);bits++)
     {
-        ArmorVector * candidate = new ArmorVector;
+        ArmorVector *candidate = new ArmorVector;
         double candidateCost = 0;
         double candidateDefense = 0;
         for (int j = 0;j < n;j++)
@@ -323,8 +323,9 @@ std::unique_ptr<ArmorVector> exhaustive_max_defense(
         
         }
 
-         sum_armor_vector(*candidate, candidateCost, candidateDefense);
-        if (candidateCost <= total_cost)
+        sum_armor_vector(*candidate, candidateCost, candidateDefense);
+        
+		if (candidateCost <= total_cost)
         {
             if (best->empty() || candidateDefense > best_total_defense)
             {
@@ -334,7 +335,6 @@ std::unique_ptr<ArmorVector> exhaustive_max_defense(
         }
     }
     
-
     return best;
 }
 
