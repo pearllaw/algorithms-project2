@@ -296,8 +296,7 @@ std::unique_ptr<ArmorVector> greedy_max_defense
 // return the subset whose gold cost fits within the total_cost budget,
 // and whose total defense is greatest.
 // To avoid overflow, the size of the armor items vector must be less than 64.
-std::unique_ptr<ArmorVector> exhaustive_max_defense
-(
+std::unique_ptr<ArmorVector> exhaustive_max_defense(
 	const ArmorVector& armors,
 	double total_cost
 )
@@ -305,8 +304,38 @@ std::unique_ptr<ArmorVector> exhaustive_max_defense
 	const int n = armors.size();
 	assert(n < 64);
 	
-	// TODO: implement this function, then delete this comment
-	return nullptr;
+ std::unique_ptr<ArmorVector>best(new ArmorVector);
+    double best_total_cost = 0; 
+    double best_total_defense = 0;
+
+
+    for (uint64_t bits = 0; bits < pow(2, n);bits++)
+    {
+        ArmorVector * candidate = new ArmorVector;
+        double candidateCost = 0;
+        double candidateDefense = 0;
+        for (int j = 0;j < n;j++)
+        {
+            if (((bits >> j) & 1) == 1)
+            {
+                candidate->push_back(armors[j]);
+            }
+        
+        }
+
+         sum_armor_vector(*candidate, candidateCost, candidateDefense);
+        if (candidateCost <= total_cost)
+        {
+            if (best->empty() || candidateDefense > best_total_defense)
+            {
+                best = std::unique_ptr<ArmorVector>(candidate);
+                sum_armor_vector(*best, best_total_cost, best_total_defense);
+            }
+        }
+    }
+    
+
+    return best;
 }
 
 
